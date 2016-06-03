@@ -1,4 +1,4 @@
-# [Dropwizard](http://www.dropwizard.io/0.9.2/docs/)
+# [Dropwizard](http://www.dropwizard.io/)
 
 Dropwizard é um framework Java open source para o desenvolvimento de *ops-friendly*, de alto desempenho, para serviços Web RESTful. Foi desenvolvido pelo [Yammer](https://www.yammer.com/).
 
@@ -27,4 +27,10 @@ Para executar o projeto precisamos do comando dentro da pasta do projeto:
 $ java -jar target/dropwizard-example-1.0-SNAPSHOT.jar server hello-world.yml
 ```
 
-Estará disponível na url: localhost:8080/hello-world?name=MyParam
+Estará disponível na url: http://localhost:8080/hello-world?name=MyParam
+
+
+#### Referências:
+
+http://www.dropwizard.io/
+https://blog.openshift.com/day-13-dropwizard-the-awesome-java-rest-server-stack/

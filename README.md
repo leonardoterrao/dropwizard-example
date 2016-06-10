@@ -24,7 +24,7 @@ Algumas razões para aprender/utilizar Dropwizard:
 Para executar o projeto precisamos do comando dentro da pasta do projeto:
 
 ```sh
-$ java -jar target/dropwizard-example-1.0-SNAPSHOT.jar server hello-world.yml
+$ java -jar target/dropwizard-example-1.0-SNAPSHOT.jar server configuration.yml
 ```
 
 Estará disponível na url: http://localhost:8080/hello-world?name=MyParam

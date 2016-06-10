@@ -2,7 +2,6 @@ package br.com.leonardoterrao.resources;
 
 import br.com.leonardoterrao.api.Saying;
 import io.dropwizard.testing.junit.ResourceTestRule;
-import org.assertj.core.api.Assertions;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

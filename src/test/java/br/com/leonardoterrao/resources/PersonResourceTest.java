@@ -30,8 +30,7 @@ public class PersonResourceTest {
 
     @Before
     public void beforeTest() {
-        person = new Person();
-        person.setId(1L);
+        person = Person.builder().id(1L).build();
     }
 
     @After

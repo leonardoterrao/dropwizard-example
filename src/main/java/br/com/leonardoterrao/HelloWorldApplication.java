@@ -9,6 +9,7 @@ import br.com.leonardoterrao.resources.PeopleResource;
 import br.com.leonardoterrao.resources.PersonResource;
 import br.com.leonardoterrao.template.Template;
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.db.DataSourceFactory;
@@ -59,12 +60,14 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
                         bootstrap.getConfigurationSourceProvider(), new EnvironmentVariableSubstitutor(false))
         );
 
+        bootstrap.addBundle(new AssetsBundle());
         bootstrap.addBundle(new MigrationsBundle<HelloWorldConfiguration>() {
             @Override
             public DataSourceFactory getDataSourceFactory(HelloWorldConfiguration configuration) {
                 return configuration.getDataSourceFactory();
             }
         });
+
         bootstrap.addBundle(hibernateBundle);
         bootstrap.addBundle(new ViewBundle<HelloWorldConfiguration>() {
             @Override

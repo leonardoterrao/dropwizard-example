@@ -1,10 +1,12 @@
 package br.com.leonardoterrao.template;
 
 import lombok.AllArgsConstructor;
+import lombok.ToString;
 
 import java.util.Optional;
 
 @AllArgsConstructor
+@ToString
 public class Template {
 
     private final String content;

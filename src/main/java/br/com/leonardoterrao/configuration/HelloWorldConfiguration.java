@@ -1,12 +1,16 @@
 package br.com.leonardoterrao.configuration;
 
+import br.com.leonardoterrao.template.Template;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.ImmutableMap;
 import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Collections;
+import java.util.Map;
 
 public class HelloWorldConfiguration extends Configuration {
 
@@ -20,9 +24,12 @@ public class HelloWorldConfiguration extends Configuration {
     @NotNull
     private DataSourceFactory database = new DataSourceFactory();
 
+    @NotNull
+    private Map<String, Map<String, String>> viewRendererConfiguration = Collections.emptyMap();
+
     @JsonProperty
-    public String getTemplate() {
-        return template;
+    public Template getTemplate() {
+        return new Template(template, defaultName);
     }
 
     @JsonProperty
@@ -50,5 +57,17 @@ public class HelloWorldConfiguration extends Configuration {
         this.database = dataSourceFactory;
     }
 
+    @JsonProperty("viewRendererConfiguration")
+    public Map<String, Map<String, String>> getViewRendererConfiguration() {
+        return viewRendererConfiguration;
+    }
 
+    @JsonProperty("viewRendererConfiguration")
+    public void setViewRendererConfiguration(Map<String, Map<String, String>> viewRendererConfiguration) {
+        final ImmutableMap.Builder<String, Map<String, String>> builder = ImmutableMap.builder();
+        viewRendererConfiguration.entrySet().forEach(
+                entry -> builder.put(entry.getKey(), ImmutableMap.copyOf(entry.getValue())));
+
+        this.viewRendererConfiguration = builder.build();
+    }
 }

@@ -1,6 +1,7 @@
 package br.com.leonardoterrao.resources;
 
 import br.com.leonardoterrao.api.Saying;
+import br.com.leonardoterrao.template.Template;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -16,7 +17,7 @@ public class HelloWorldResourceTest {
 
     @ClassRule
     public static final ResourceTestRule resouces = ResourceTestRule.builder()
-            .addResource(new HelloWorldResource("Hello, %s!", "Fulano"))
+            .addResource(new HelloWorldResource(new Template("Hello, %s!", "Fulano")))
             .build();
 
     @Test

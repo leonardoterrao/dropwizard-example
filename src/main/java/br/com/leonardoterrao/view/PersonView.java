@@ -2,9 +2,7 @@ package br.com.leonardoterrao.view;
 
 import br.com.leonardoterrao.model.Person;
 import io.dropwizard.views.View;
-import lombok.Getter;
 
-@Getter
 public class PersonView extends View {
 
     private final Person person;
@@ -27,6 +25,10 @@ public class PersonView extends View {
         public String getTemplateName() {
             return templateName;
         }
+    }
+
+    public Person getPerson() {
+        return person;
     }
 
 }

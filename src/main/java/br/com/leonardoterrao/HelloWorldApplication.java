@@ -7,15 +7,19 @@ import br.com.leonardoterrao.model.Person;
 import br.com.leonardoterrao.resources.HelloWorldResource;
 import br.com.leonardoterrao.resources.PeopleResource;
 import br.com.leonardoterrao.resources.PersonResource;
-import br.com.leonardoterrao.view.PersonView;
+import br.com.leonardoterrao.template.Template;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.db.DataSourceFactory;
-import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.dropwizard.views.ViewBundle;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
+
+import java.util.Map;
 
 public class HelloWorldApplication extends Application<HelloWorldConfiguration> {
 
@@ -39,10 +43,11 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
     @Override
     public void run(HelloWorldConfiguration configuration, Environment environment) throws Exception {
         final PersonDAO dao = new PersonDAO(hibernateBundle.getSessionFactory());
-        final String template = configuration.getTemplate();
+        final Template template = configuration.getTemplate();
 
         environment.healthChecks().register("template", new TemplateHealthCheck(template));
-        environment.jersey().register(new HelloWorldResource(template, configuration.getDefaultName()));
+        environment.jersey().register(RolesAllowedDynamicFeature.class);
+        environment.jersey().register(new HelloWorldResource(template));
         environment.jersey().register(new PeopleResource(dao));
         environment.jersey().register(new PersonResource(dao));
     }
@@ -53,6 +58,20 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
                 new SubstitutingSourceProvider(
                         bootstrap.getConfigurationSourceProvider(), new EnvironmentVariableSubstitutor(false))
         );
+
+        bootstrap.addBundle(new MigrationsBundle<HelloWorldConfiguration>() {
+            @Override
+            public DataSourceFactory getDataSourceFactory(HelloWorldConfiguration configuration) {
+                return configuration.getDataSourceFactory();
+            }
+        });
+        bootstrap.addBundle(hibernateBundle);
+        bootstrap.addBundle(new ViewBundle<HelloWorldConfiguration>() {
+            @Override
+            public Map<String, Map<String, String>> getViewConfiguration(HelloWorldConfiguration configuration) {
+                return configuration.getViewRendererConfiguration();
+            }
+        });
     }
 
 }

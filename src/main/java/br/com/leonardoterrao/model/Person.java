@@ -21,7 +21,7 @@ public class Person {
     public static final String QUERY_FIND_ALL = "br.com.leonardoterrao.model.Person.findAll";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(name = "name", nullable = false, length = 150)

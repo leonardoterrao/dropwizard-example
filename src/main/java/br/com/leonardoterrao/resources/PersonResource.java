@@ -27,7 +27,7 @@ public class PersonResource {
     @Path("/view_freemarker")
     @UnitOfWork
     @Produces(MediaType.TEXT_HTML)
-    public PersonView getPersonViewFreeMarker(@PathParam("personId") LongParam personId) {
+    public PersonView getPersonViewFreemarker(@PathParam("personId") LongParam personId) {
         return new PersonView(PersonView.Template.FREEMARKER, findSafely(personId.get()));
     }
 
@@ -39,7 +39,8 @@ public class PersonResource {
         return new PersonView(PersonView.Template.MUSTACHE, findSafely(personId.get()));
     }
 
-    private Person findSafely(Long personId) {
+    private Person findSafely(long personId) {
         return personDAO.findById(personId).orElseThrow(() -> new NotFoundException("No such user."));
     }
+
 }
